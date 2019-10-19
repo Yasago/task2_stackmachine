@@ -12,12 +12,70 @@
 
 #include "int_stack.h"
 
-// TODO: add necessary headers here
-// #include <...
+// Added necessary header
+#include <stdexcept>
 
 namespace xi {
 
-// TODO: add method definitions here
+
+//==============================================================================
+// class IntStack
+//==============================================================================
+
+
+IntStack::IntStack(size_t sz)
+{
+    _stack = new int[sz];
+    _ssize = sz;
+    _head = -1;
+}
+
+IntStack::~IntStack()
+{
+    delete[] _stack;
+    _stack = nullptr;
+    _ssize = 0;
+    _head = -1;
+}
+
+void IntStack::push(int el)
+{
+    if (isFull())
+        throw std::logic_error("No more elements can be placed onto the stack due to its overflow");
+
+    _stack[++_head] = el;
+}
+
+int IntStack::pop()
+{
+    if (isEmpty())
+        throw std::logic_error("No elements stored in the stack");
+
+    return _stack[_head--];
+}
+
+int IntStack::top()
+{
+    if (isEmpty())
+        throw std::logic_error("No elements stored in the stack");
+
+    return _stack[_head];
+}
+
+void IntStack::clear()
+{
+    _head = -1;
+}
+
+bool IntStack::isEmpty() const
+{
+    return _head == -1;
+}
+
+bool IntStack::isFull() const
+{
+    return _head == _ssize - 1;
+}
 
 } // namespace xi
 
